@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Lucas
  */
-public class Server {
+public class ProtocoloComParametrosServer {
 
     // Server Soket
     private ServerSocket serverSoket;
@@ -46,29 +46,17 @@ public class Server {
         ObjectInputStream input = null;
 
         try {
-            // CLIENTE ------- socket ------- servidor
 
-            // stream de saida de dados - Quando precisar pegar dados
             output = new ObjectOutputStream(socket.getOutputStream());
-
-            // stream de entrada de dados - Quando precisar enviar dados
             input = new ObjectInputStream(socket.getInputStream());
 
-            /**
-             * input.readObject(); --> ficar ouvindo o socket até que tenha um
-             * objeto java input.readUTF() --> ficar ouvindo o socket até que
-             * tenha uma string no formato UTF-8 OBS: o mesmo vale para o output
-             *
-             * simulação: Client -> hellow | Server --> hellow word
-             *
-             */
             String msg = input.readUTF();
             System.out.println("Mensagem recebida...");
             output.writeUTF("HELLOW WORD!!!");
 
             // liberrando o buffer par envio
             output.flush();
-
+            // fechando input e output
             input.close();
             output.close();
 
@@ -87,7 +75,7 @@ public class Server {
     public static void main(String[] args) {
 
         try {
-            Server server = new Server();
+            ProtocoloComParametrosServer server = new ProtocoloComParametrosServer();
 
             // solicita uma nova conexão
             server.getServerSoket(5555);
@@ -104,7 +92,7 @@ public class Server {
                 System.out.println("Protocolo executado ");
             }
         } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProtocoloComParametrosServer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
